@@ -8,10 +8,6 @@ import android.widget.TextView;
 
 import cbgm.de.listapi.data.CBBaseButton;
 
-/**
- * Created by SA_Admin on 17.02.2017.
- */
-
 public class MyButton extends CBBaseButton {
     public MyButton(int buttonId, int colorId, int imageId) {
         super(buttonId, colorId, imageId);

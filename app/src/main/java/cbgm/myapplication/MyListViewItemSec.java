@@ -13,10 +13,6 @@ import cbgm.de.listapi.listener.SwipeListener;
 import cbgm.myapplication.base.MyHolder;
 import cbgm.myapplication.base.ViewItem;
 
-/**
- * Created by SA_Admin on 06.02.2017.
- */
-
 public class MyListViewItemSec extends ViewItem {
 
 

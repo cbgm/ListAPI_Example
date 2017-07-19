@@ -8,9 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cbgm.de.listapi.data.CBListActivity;
+import cbgm.myapplication.base.MyMenuListener;
 import cbgm.myapplication.base.ViewItem;
 
-public class MainActivity extends CBListActivity<ViewItem, MyAdapter> {
+public class MainActivity extends CBListActivity<ViewItem, MyAdapter> implements MyMenuListener {
     private static final int MENU_ITEM_ITEM1 = 1;
     List<ViewItem> test;
 
@@ -29,7 +30,7 @@ public class MainActivity extends CBListActivity<ViewItem, MyAdapter> {
 
             if (type == 1) {
                 String item = "item 11111111111" + i;
-                MyListViewItem li = new MyListViewItem(item, new MyViewHolder(), R.layout.backitem_standard);
+                MyListViewItem li = new MyListViewItem(item, new MyViewHolder(), R.layout.backitem_standard, this);
                 test.add(li);
                 type = 2;
             } else {
@@ -93,6 +94,11 @@ public class MainActivity extends CBListActivity<ViewItem, MyAdapter> {
             default:
                 return false;
         }
+    }
+
+    @Override
+    public void test(Object o) {
+        Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_SHORT).show();
     }
 }
 
