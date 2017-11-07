@@ -8,9 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import cbgm.de.listapi.listener.IListMenuListener;
-import cbgm.de.listapi.listener.IOneClickListener;
-import cbgm.de.listapi.listener.SwipeListener;
+import cbgm.de.listapi.listener.CBListMode;
+import cbgm.de.listapi.listener.ICBActionNotifier;
+import cbgm.de.listapi.listener.CBSwipeListener;
 import cbgm.myapplication.base.MyButton;
 import cbgm.myapplication.base.MyHolder;
 import cbgm.myapplication.base.MyMenuListener;
@@ -23,21 +23,21 @@ public class MyListViewItem extends ViewItem {
 
     private MyMenuListener myMenuListener;
 
-    public MyListViewItem(String item, MyHolder holder, int itemResource, MyMenuListener myMenuListener) {
-        super(item, holder, itemResource);
+    public MyListViewItem(String item, MyHolder holder, int itemResource, MyMenuListener myMenuListener, int firstSelectedPos) {
+        super(item, holder, itemResource, firstSelectedPos);
         this.addDelete = true;
         this.addEdit = true;
         this.customButtons.add(new MyButton(id, R.color.yellow, -1));
         this.myMenuListener = myMenuListener;
     }
 
-    public MyViewHolder setUpView(final int position, View convertView, final ViewGroup parent, final boolean isSortMode, final IListMenuListener listMenuListener, final int highlightPos, final IOneClickListener oneClickListener, final LayoutInflater inflater, final SwipeListener swipeListener, Context context) {
+    public MyViewHolder setUpView(final int position, View convertView, final ViewGroup parent, final CBListMode mode, final ICBActionNotifier listMenuListener, final int highlightPos, final LayoutInflater inflater, final CBSwipeListener swipeListener, Context context) {
 
         MyViewHolder test = (MyViewHolder)holder;
         test.name.setText(item);
         test.name.setEnabled(true);
         test.name.setTextColor(Color.GREEN);
-        if (isSortMode) {
+     /*   if (mode == CBListMode.SORT) {
             test.name.setOnClickListener(null);
         } else {
             test.name.setOnClickListener(new View.OnClickListener() {
@@ -54,7 +54,7 @@ public class MyListViewItem extends ViewItem {
                 swipeListener.rollback();
                 myMenuListener.test(item);
             }
-        });
+        });*/
         return test;
     }
 

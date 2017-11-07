@@ -9,7 +9,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/listapi-1.0" />
+            <option value="$PROJECT_DIR$/list-api" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
