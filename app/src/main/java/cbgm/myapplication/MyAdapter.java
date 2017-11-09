@@ -10,7 +10,7 @@ import cbgm.de.listapi.listener.CBListMode;
 import cbgm.myapplication.base.ViewItem;
 
 public class MyAdapter extends CBAdapter<ViewItem> {
-    public MyAdapter(Context context, List<ViewItem> data, CBListMode mode) {
-        super(context, data, mode);
+    public MyAdapter(Context context) {
+        super(context);
     }
 }

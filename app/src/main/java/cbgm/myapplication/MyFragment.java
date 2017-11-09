@@ -2,7 +2,6 @@ package cbgm.myapplication;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,41 +24,42 @@ import cbgm.myapplication.base.ViewItem;
  */
 
 public class MyFragment extends Fragment implements ICBActionDelegate, MyMenuListener {
-    List<ViewItem> test;
-    CBListView listContainer;
-    MyAdapter adapter;
-    Boolean isSortMode = false;
+    private List<ViewItem> viewItems;
+    private CBListView listContainer;
+    private MyAdapter adapter;
+    private Boolean isSortMode = false;
     private static final int MENU_ITEM_ITEM1 = 1;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment, container, false);
-        this.listContainer = (CBListView) rootView.findViewById(R.id.list_container);
+        this.listContainer = (CBListView<ViewItem, MyAdapter>) rootView.findViewById(R.id.list_container);
         this.listContainer.setDelegateListener(this);
-        this.adapter = new MyAdapter(getContext(), loadData(), CBListMode.SWIPE);
+        this.adapter = new MyAdapter(getContext());
+        loadData();
         setHasOptionsMenu(true);
-        this.listContainer.init(CBListMode.SWIPE, loadData(), adapter);
+        this.listContainer.init(CBListMode.SWIPE, this.viewItems, this.adapter);
         return rootView;
-
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.add(Menu.NONE, MENU_ITEM_ITEM1, Menu.NONE, "Sort: " + isSortMode).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        menu.add(Menu.NONE, MENU_ITEM_ITEM1, Menu.NONE, "Sort: " + this.isSortMode).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case MENU_ITEM_ITEM1:
                 this.isSortMode = !this.isSortMode;
-                item.setTitle("Sort: " + isSortMode);
-                if (isSortMode) {
-                    this.listContainer.init(CBListMode.SORT, loadData(), adapter);
+                item.setTitle("Sort: " + this.isSortMode);
+
+                if (this.isSortMode) {
                     loadData();
+                    this.listContainer.init(CBListMode.SORT, this.viewItems, this.adapter);
                 } else {
-                    this.listContainer.init(CBListMode.SWIPE, loadData(), adapter);
                     loadData();
+                    this.listContainer.init(CBListMode.SWIPE, this.viewItems, this.adapter);
                 }
                 break;
             default:
@@ -68,25 +68,23 @@ public class MyFragment extends Fragment implements ICBActionDelegate, MyMenuLis
         return false;
     }
 
-    public List loadData() {
-        this.test = new ArrayList<>();
+    public void loadData() {
+        this.viewItems = new ArrayList<>();
         int type = 1;
-        test = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 10; i++) {
 
             if (type == 1) {
                 String item = "item 11111111111" + i;
                 MyListViewItem li = new MyListViewItem(item, new MyViewHolder(), R.layout.backitem_standard, this, -1);
-                test.add(li);
+                this.viewItems.add(li);
                 type = 2;
             } else {
                 String item = "item " + i;
                 MyListViewItemSec li2 = new MyListViewItemSec(item, new MyViewHolder2(), R.layout.backitem_standard2, -1);
-                test.add(li2);
+                this.viewItems.add(li2);
                 type = 1;
             }
         }
-        return test;
     }
 
     @Override
