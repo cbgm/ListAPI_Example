@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/MyApplication2.iml" filepath="$PROJECT_DIR$/MyApplication2.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/list-api/list-api.iml" filepath="$PROJECT_DIR$/list-api/list-api.iml" />
-      <module fileurl="file://$PROJECT_DIR$/listapi-1.0/listapi-1.0.iml" filepath="$PROJECT_DIR$/listapi-1.0/listapi-1.0.iml" />
     </modules>
   </component>
 </project>

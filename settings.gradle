@@ -1,1 +1,1 @@
-include ':app', ':listapi-1.0', ':list-api'
+include ':app', ':list-api'

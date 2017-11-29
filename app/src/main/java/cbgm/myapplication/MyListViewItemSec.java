@@ -7,9 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import cbgm.de.listapi.listener.CBListMode;
+import cbgm.de.listapi.data.CBListMode;
 import cbgm.de.listapi.listener.ICBActionNotifier;
-import cbgm.de.listapi.listener.CBSwipeListener;
 import cbgm.myapplication.base.MyHolder;
 import cbgm.myapplication.base.ViewItem;
 
@@ -21,7 +20,7 @@ public class MyListViewItemSec extends ViewItem {
         this.addDelete = true;
     }
 
-    public MyViewHolder2 setUpView(final int position, View convertView, final ViewGroup parent, final CBListMode mode, final ICBActionNotifier listMenuListener, final int highlightPos, final LayoutInflater inflater, final CBSwipeListener swipeListener, Context context) {
+    public MyViewHolder2 setUpView(final int position, View convertView, final ViewGroup parent, final ICBActionNotifier listMenuListener, final LayoutInflater inflater, Context context) {
 
         MyViewHolder2 test = (MyViewHolder2)holder;
         test.name.setText(item);

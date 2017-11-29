@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import cbgm.de.listapi.data.CBBaseButton;
+import cbgm.de.listapi.basic.CBBaseButton;
 
 public class MyButton extends CBBaseButton {
     public MyButton(int buttonId, int colorId, int imageId) {

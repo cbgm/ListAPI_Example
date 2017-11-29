@@ -8,9 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import cbgm.de.listapi.listener.CBListMode;
 import cbgm.de.listapi.listener.ICBActionNotifier;
-import cbgm.de.listapi.listener.CBSwipeListener;
 import cbgm.myapplication.base.MyButton;
 import cbgm.myapplication.base.MyHolder;
 import cbgm.myapplication.base.MyMenuListener;
@@ -31,7 +29,7 @@ public class MyListViewItem extends ViewItem {
         this.myMenuListener = myMenuListener;
     }
 
-    public MyViewHolder setUpView(final int position, View convertView, final ViewGroup parent, final CBListMode mode, final ICBActionNotifier listMenuListener, final int highlightPos, final LayoutInflater inflater, final CBSwipeListener swipeListener, Context context) {
+    public MyViewHolder setUpView(final int position, View convertView, final ViewGroup parent, final ICBActionNotifier listMenuListener, final LayoutInflater inflater, Context context) {
 
         MyViewHolder test = (MyViewHolder)holder;
         test.name.setText(item);
@@ -47,14 +45,14 @@ public class MyListViewItem extends ViewItem {
                 }
             });
         }
-
+*/
         test.buttonContainer.findViewById(id).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                swipeListener.rollback();
-                myMenuListener.test(item);
+                if (modeHelper.isItemTouchCurrentItem(position))
+                    myMenuListener.test(item);
             }
-        });*/
+        });
         return test;
     }
 
