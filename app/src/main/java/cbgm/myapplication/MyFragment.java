@@ -2,6 +2,7 @@ package cbgm.myapplication;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,31 +15,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cbgm.de.listapi.basic.CBListView;
+import cbgm.de.listapi.data.CBListItem;
 import cbgm.de.listapi.data.CBListMode;
 import cbgm.de.listapi.data.CBModeHelper;
 import cbgm.de.listapi.listener.ICBActionDelegate;
+import cbgm.myapplication.base.BaseItem;
+import cbgm.myapplication.base.MyHolder;
 import cbgm.myapplication.base.MyMenuListener;
-import cbgm.myapplication.base.ViewItem;
 
 /**
  * Created by SA_Admin on 26.10.2017.
  */
 
 public class MyFragment extends Fragment implements ICBActionDelegate, MyMenuListener {
-    private List<ViewItem> viewItems;
+    private List<CBListItem> viewItems;
     private CBListView listContainer;
     private MyAdapter adapter;
-    private Boolean isSortMode = false;
     private static final int MENU_ITEM_ITEM1 = 1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment, container, false);
-        this.listContainer = (CBListView<ViewItem, MyAdapter>) rootView.findViewById(R.id.list_container);
+        CBModeHelper.getInstance().setListMode(CBListMode.SWIPE);
+        this.listContainer = (CBListView) rootView.findViewById(R.id.list_container);;
+        this.listContainer.setHasFixedSize(true);
+        LinearLayoutManager llm = new LinearLayoutManager(getContext());
+        this.listContainer.setLayoutManager(llm);
         this.listContainer.setDelegateListener(this);
         this.adapter = new MyAdapter(getContext());
-        CBModeHelper.getInstance().setListMode(CBListMode.SWIPE);
+        this.adapter.setCustomMenuListener(this);
         loadData();
         setHasOptionsMenu(true);
         this.listContainer.init(this.viewItems, this.adapter);
@@ -77,14 +83,10 @@ public class MyFragment extends Fragment implements ICBActionDelegate, MyMenuLis
         for (int i = 0; i < 10; i++) {
 
             if (type == 1) {
-                String item = "item 11111111111" + i;
-                MyListViewItem li = new MyListViewItem(item, new MyViewHolder(), R.layout.backitem_standard, this, -1);
-                this.viewItems.add(li);
+                this.viewItems.add(new FirstItem("item 11111111111" + i));
                 type = 2;
             } else {
-                String item = "item " + i;
-                MyListViewItemSec li2 = new MyListViewItemSec(item, new MyViewHolder2(), R.layout.backitem_standard2, -1);
-                this.viewItems.add(li2);
+                this.viewItems.add(new SecondItem(i));
                 type = 1;
             }
         }
@@ -92,7 +94,7 @@ public class MyFragment extends Fragment implements ICBActionDelegate, MyMenuLis
 
     @Override
     public void test(Object o) {
-        this.listContainer.getToucHandler().informButtonClick();
+        this.listContainer.getTouchHandler().informButtonClick();
         Toast.makeText(getContext(), "test", Toast.LENGTH_SHORT).show();
     }
 
