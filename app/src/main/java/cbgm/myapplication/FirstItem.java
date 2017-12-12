@@ -6,7 +6,7 @@ import cbgm.myapplication.base.BaseItem;
  * Created by SA_Admin on 30.11.2017.
  */
 
-public class FirstItem extends BaseItem {
+public class FirstItem implements BaseItem {
    private String test;
 
    public FirstItem(String test) {

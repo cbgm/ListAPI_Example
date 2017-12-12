@@ -9,7 +9,7 @@ import cbgm.myapplication.base.BaseItem;
 import cbgm.myapplication.base.MyHolder;
 import cbgm.myapplication.base.MyMenuListener;
 
-public class MyAdapter extends CBAdapter {
+public class MyAdapter extends CBAdapter<MyHolder, BaseItem> {
 
     private MyMenuListener myMenuListener;
 

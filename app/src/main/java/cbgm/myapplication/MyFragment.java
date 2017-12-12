@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cbgm.de.listapi.basic.CBListView;
-import cbgm.de.listapi.data.CBListItem;
 import cbgm.de.listapi.data.CBListMode;
 import cbgm.de.listapi.data.CBModeHelper;
 import cbgm.de.listapi.listener.ICBActionDelegate;
@@ -27,9 +26,9 @@ import cbgm.myapplication.base.MyMenuListener;
  * Created by SA_Admin on 26.10.2017.
  */
 
-public class MyFragment extends Fragment implements ICBActionDelegate, MyMenuListener {
-    private List<CBListItem> viewItems;
-    private CBListView listContainer;
+public class MyFragment extends Fragment implements ICBActionDelegate<BaseItem>, MyMenuListener {
+    private List<BaseItem> viewItems;
+    private CBListView<MyHolder, BaseItem, MyAdapter> listContainer;
     private MyAdapter adapter;
     private static final int MENU_ITEM_ITEM1 = 1;
 
@@ -38,7 +37,7 @@ public class MyFragment extends Fragment implements ICBActionDelegate, MyMenuLis
 
         View rootView = inflater.inflate(R.layout.fragment, container, false);
         CBModeHelper.getInstance().setListMode(CBListMode.SWIPE);
-        this.listContainer = (CBListView) rootView.findViewById(R.id.list_container);;
+        this.listContainer = find(rootView, R.id.list_container);
         this.listContainer.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         this.listContainer.setLayoutManager(llm);
@@ -99,12 +98,12 @@ public class MyFragment extends Fragment implements ICBActionDelegate, MyMenuLis
     }
 
     @Override
-    public void delegateDeleteAction(Object o) {
+    public void delegateDeleteAction(BaseItem o) {
         Toast.makeText(getContext(), "delete", Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void delegateEditAction(Object o) {
+    public void delegateEditAction(BaseItem o) {
         Toast.makeText(getContext(), "edit", Toast.LENGTH_SHORT).show();
     }
 
@@ -131,5 +130,11 @@ public class MyFragment extends Fragment implements ICBActionDelegate, MyMenuLis
     @Override
     public void delegateSelectAction(int position) {
 
+    }
+
+
+    @SuppressWarnings("unchecked")
+    public final <T extends View> T find(View view, int id) {
+        return (T)view.findViewById(id);
     }
 }

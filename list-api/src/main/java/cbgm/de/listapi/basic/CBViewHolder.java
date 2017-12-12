@@ -16,12 +16,11 @@ import java.util.List;
 
 import cbgm.de.listapi.R;
 import cbgm.de.listapi.data.CBLayoutID;
-import cbgm.de.listapi.data.CBListItem;
 import cbgm.de.listapi.data.CBListMode;
 import cbgm.de.listapi.data.CBModeHelper;
 import cbgm.de.listapi.listener.ICBActionNotifier;
 
-public abstract class CBViewHolder<I extends CBListItem> extends RecyclerView.ViewHolder {
+public abstract class CBViewHolder<I> extends RecyclerView.ViewHolder {
     /* The background item which shows up on swipe */
     protected LinearLayout backItem;
     /* The list item menu container which is within the background item */
@@ -45,7 +44,7 @@ public abstract class CBViewHolder<I extends CBListItem> extends RecyclerView.Vi
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    public void addFunctionalityOnView(final I listObject, final int position, final ICBActionNotifier actionNotifier, final Context context) {
+    public void addFunctionalityOnView(final I listObject, final int position, final ICBActionNotifier<I> actionNotifier, final Context context) {
         CBListMode mode = CBModeHelper.getInstance().getListMode();
 
         switch (mode) {
@@ -59,7 +58,7 @@ public abstract class CBViewHolder<I extends CBListItem> extends RecyclerView.Vi
                         public boolean onTouch(View v, MotionEvent event) {
 
                             if (CBModeHelper.getInstance().isItemTouchCurrentItem(position)) {
-                                actionNotifier.editAction(position);
+                                actionNotifier.editAction(listObject);
                                 return true;
                             }
                             return false;
@@ -148,7 +147,7 @@ public abstract class CBViewHolder<I extends CBListItem> extends RecyclerView.Vi
      * @param actionNotifier the listener for clicks
      * @param context the context
      */
-    protected abstract void setUpPersonalView(final I listObject, final int position, final ICBActionNotifier actionNotifier, final Context context);
+    protected abstract void setUpPersonalView(final I listObject, final int position, final ICBActionNotifier<I> actionNotifier, final Context context);
 
     /**
      * Method for initializing the view.

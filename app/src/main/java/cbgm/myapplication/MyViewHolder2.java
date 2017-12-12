@@ -8,10 +8,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import cbgm.de.listapi.listener.ICBActionNotifier;
+import cbgm.myapplication.base.BaseItem;
 import cbgm.myapplication.base.MyHolder;
 
 
-public class MyViewHolder2 extends MyHolder<SecondItem> {
+public class MyViewHolder2 extends MyHolder {
     private TextView name;
 
     public MyViewHolder2(View itemView, Context context, ViewGroup parent, int itemRessource) {
@@ -25,11 +26,11 @@ public class MyViewHolder2 extends MyHolder<SecondItem> {
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void setUpPersonalView(SecondItem listItem, int position, ICBActionNotifier actionNotifier, Context context) {
-        this.name.setText(listItem.getNumber()+"");
+    protected void setUpPersonalView(BaseItem listObject, int position, ICBActionNotifier<BaseItem> actionNotifier, Context context) {
+        SecondItem temp = (SecondItem) listObject;
+        this.name.setText(temp.getNumber()+"");
         this.name.setEnabled(true);
         this.name.setTextColor(Color.BLACK);
-
     }
 
     @Override
