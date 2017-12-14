@@ -49,6 +49,7 @@ public class CBBaseView {
 
         mainContainer.addView(frontItem);
 
+
         return mainContainer;
     }
 

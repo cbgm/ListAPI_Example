@@ -33,7 +33,7 @@ public class MyAdapter extends CBAdapter<MyHolder, BaseItem> {
             case 0:
                 return new MyViewHolder(CBBaseView.getView(context), context, parent, R.layout.backitem_standard, myMenuListener);
             case 1:
-                return new MyViewHolder2(CBBaseView.getView(context), context, parent, R.layout.backitem_standard2);
+                return new MyViewHolder2(MyBaseView.getView(context), context, parent, R.layout.backitem_standard2);
             default:
                 break;
         }
