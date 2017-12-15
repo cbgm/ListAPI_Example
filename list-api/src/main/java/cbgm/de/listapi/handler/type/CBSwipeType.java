@@ -36,6 +36,7 @@ public class CBSwipeType<H extends CBViewHolder<I>, I> extends CBTouchType<H, I>
     @Override
     public void cleanTouch() {
         Log.d("LIST API", "Item swipe rollback");
+        this.holder.getFrontItem().setBackgroundColor(Color.WHITE);
         this.holder.getFrontItem().bringToFront();
         doAnimation(-this.fromX, 0);
         this.fromX = -1;
@@ -55,8 +56,9 @@ public class CBSwipeType<H extends CBViewHolder<I>, I> extends CBTouchType<H, I>
         Log.d("LIST API", "Item long clicked");
 
        if (!this.modeHelper.isSwipeActive()) {
-           if (((ColorDrawable)holder.getFrontItem().getBackground()).getColor() == Color.WHITE) {
-               holder.getFrontItem().setBackgroundColor(Color.LTGRAY);
+           int color = ((ColorDrawable)holder.getFrontItem().getBackground()).getColor();
+           if (color == Color.WHITE || color == this.modeHelper.getHighlightColor()) {
+               holder.getFrontItem().setBackgroundColor(this.modeHelper.getSelectColor());
            } else {
                holder.getFrontItem().setBackgroundColor(Color.WHITE);
            }
@@ -67,12 +69,16 @@ public class CBSwipeType<H extends CBViewHolder<I>, I> extends CBTouchType<H, I>
 
     @Override
     public void onInitialDown(MotionEvent e) {
-        View view = this.listContainer.findChildViewUnder((int) e.getX(), (int) e.getY());
-        this.pos = this.listContainer.getChildAdapterPosition(view);
+
+        if (isMotionOutside(e, null))
+            return;
+        View childView = this.listContainer.findChildViewUnder((int) e.getX(), (int) e.getY());
+        this.pos = this.listContainer.getChildAdapterPosition(childView);
 
         if (!this.modeHelper.isSwipeActive() && this.pos != -1) {
             this.fromX = 0;
-            this.holder = (CBViewHolder) view.getTag();
+            this.holder = (CBViewHolder) childView.getTag();
+            this.holder.getFrontItem().setBackgroundColor(this.modeHelper.getHighlightColor());
             this.modeHelper.setCurrentPosition(this.pos);
         }
     }
@@ -80,6 +86,9 @@ public class CBSwipeType<H extends CBViewHolder<I>, I> extends CBTouchType<H, I>
 
     @Override
     public void onSwipeLeft(MotionEvent start, MotionEvent end) {
+
+        if (isMotionOutside(start, end))
+            return;
 
         if (!this.modeHelper.isSwipeActive()) {
             float offset = 0;
@@ -99,20 +108,34 @@ public class CBSwipeType<H extends CBViewHolder<I>, I> extends CBTouchType<H, I>
 
     @Override
     public void onSwipeRight(MotionEvent start, MotionEvent end) {
+
+        if (isMotionOutside(start, end))
+            return;
+
         if (this.modeHelper.isSwipeActive() && this.pos == this.modeHelper.getCurrentPosition())
             cleanTouch();
     }
 
     @Override
     public void onUp(MotionEvent event) {
+        if (isMotionOutside(event, null) && this.holder != null && !this.modeHelper.isSwipeActive())
+            cleanTouch();
+
+        if (isMotionOutside(event, null))
+            return;
+
         if (!this.modeHelper.isSwipeActive() && !this.modeHelper.isButtonClicked()) {
             cleanTouch();
         }
+       // view.setBackgroundColor(Color.parseColor("#f9f9f9"));
 
     }
 
     @Override
     public void onClick(MotionEvent e) {
+        if (isMotionOutside(e, null))
+            return;;
+
         if (!this.modeHelper.isSwipeActive())
             this.actionNotifier.singleClickAction(this.pos);
 

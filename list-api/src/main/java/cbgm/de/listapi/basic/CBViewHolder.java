@@ -20,6 +20,7 @@ import cbgm.de.listapi.data.CBListMode;
 import cbgm.de.listapi.data.CBModeHelper;
 import cbgm.de.listapi.listener.ICBActionNotifier;
 
+@SuppressWarnings("unused")
 public abstract class CBViewHolder<I> extends RecyclerView.ViewHolder {
     /* The background item which shows up on swipe */
     protected LinearLayout backItem;
@@ -31,7 +32,7 @@ public abstract class CBViewHolder<I> extends RecyclerView.ViewHolder {
     protected LinearLayout delete;
     /* The basic edit button */
     protected LinearLayout edit;
-    //tells if the edeit button should be added
+    //tells if the edit button should be added
     private boolean addEdit;
     //tells if the delete button should be added
     private boolean addDelete;
@@ -45,7 +46,8 @@ public abstract class CBViewHolder<I> extends RecyclerView.ViewHolder {
 
     @SuppressLint("ClickableViewAccessibility")
     public void addFunctionalityOnView(final I listObject, final int position, final ICBActionNotifier<I> actionNotifier, final Context context) {
-        CBListMode mode = CBModeHelper.getInstance().getListMode();
+        CBModeHelper modeHelper = CBModeHelper.getInstance();
+        CBListMode mode = modeHelper.getListMode();
 
         switch (mode) {
             case SWIPE:
@@ -87,7 +89,7 @@ public abstract class CBViewHolder<I> extends RecyclerView.ViewHolder {
             case SORT:
                 //highlight item with different color if dragged
                 if (CBModeHelper.getInstance().getSelectedPosition() == position) {
-                    this.frontItem.setBackgroundColor(Color.LTGRAY);
+                    this.frontItem.setBackgroundColor(modeHelper.getSelectColor());
                 } else {
                     this.frontItem.setBackgroundColor(Color.WHITE);
                 }
@@ -115,7 +117,7 @@ public abstract class CBViewHolder<I> extends RecyclerView.ViewHolder {
         this.customButtons = new ArrayList<>();
         initCustomButtons();
 
-        this.frontItem = (GridLayout)itemView.findViewById(CBLayoutID.ITEM_FOREGROUND_ID);
+        this.frontItem = (GridLayout) itemView.findViewById(CBLayoutID.ITEM_FOREGROUND_ID);
         this.buttonContainer = (LinearLayout) itemView.findViewById(CBLayoutID.BUTTON_CONTAINER_ID);
 
         if (addEdit) {

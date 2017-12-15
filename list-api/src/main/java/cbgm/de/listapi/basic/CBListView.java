@@ -20,6 +20,7 @@ import cbgm.de.listapi.listener.ICBActionNotifier;
  * @author Christian Bergmann
  */
 
+@SuppressWarnings("unused")
 public class CBListView<H extends CBViewHolder<I>, I, A extends CBAdapter<H, I>> extends RecyclerView implements ICBActionNotifier<I> {
     /*Listener to forward list item click events*/
     protected ICBActionDelegate<I> deletegateListener;
@@ -117,6 +118,7 @@ public class CBListView<H extends CBViewHolder<I>, I, A extends CBAdapter<H, I>>
             if (!hasSelection) {
                 this.modeHelper.setListMode(CBListMode.SWIPE);
                 this.modeHelper.setSelectedPosition(-1);
+                this.adapter.notifyDataSetChanged();
                 Log.d("LIST API", "off select");
             }
             return;
@@ -130,6 +132,7 @@ public class CBListView<H extends CBViewHolder<I>, I, A extends CBAdapter<H, I>>
         if (this.modeHelper.getListMode() != CBListMode.SELECT) {
             setSelectedItems();
             this.modeHelper.setListMode(CBListMode.SELECT);
+            this.adapter.notifyDataSetChanged();
             handleSelect(position);
         }
         deletegateListener.delegateLongClickAction(position);
@@ -169,7 +172,7 @@ public class CBListView<H extends CBViewHolder<I>, I, A extends CBAdapter<H, I>>
      */
     public void init(final List<I> data, A adapter) {
         this.adapter = adapter;
-        
+
         if (isTouchable) {
             this.touchHandler = new CBTouchHandler<>(data, this.adapter, this, this, getContext());
             this.setOnTouchListener(touchHandler);
