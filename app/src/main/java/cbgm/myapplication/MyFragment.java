@@ -36,12 +36,7 @@ public class MyFragment extends Fragment implements ICBActionDelegate<BaseItem>,
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment, container, false);
-        CBModeHelper.getInstance().setListMode(CBListMode.SWIPE);
         this.listContainer = find(rootView, R.id.list_container);
-        this.listContainer.setHasFixedSize(true);
-        LinearLayoutManager llm = new LinearLayoutManager(getContext());
-        this.listContainer.setLayoutManager(llm);
-        this.listContainer.setDelegateListener(this);
         List<CBAdapterDelegate> delegates = new ArrayList<>();
         delegates.add(new AdapterDelegate1(this));
         delegates.add(new AdapterDelegate2());
@@ -64,11 +59,9 @@ public class MyFragment extends Fragment implements ICBActionDelegate<BaseItem>,
                 if (CBModeHelper.getInstance().getListMode() == CBListMode.SWIPE) {
                     CBModeHelper.getInstance().setListMode(CBListMode.SORT);
                     loadData();
-                    //this.listContainer.init(this.viewItems, this.adapter);
                 } else {
                     CBModeHelper.getInstance().setListMode(CBListMode.SWIPE);
                     loadData();
-                    //this.listContainer.init(this.viewItems, this.adapter);
                 }
                 break;
             default:
@@ -82,14 +75,13 @@ public class MyFragment extends Fragment implements ICBActionDelegate<BaseItem>,
         int type = 1;
         for (int i = 0; i < 20; i++) {
 
-           /* if (type == 1) {
+            if (type == 1) {
                 this.viewItems.add(new FirstItem("item 11111111111" + i));
                 type = 2;
-            } else {*/
-                //this.viewItems.add(new SecondItem(i));
-            /*    type = 1;
-            }*/
-            this.viewItems.add(new FirstItem("item 11111111111" + i));
+            } else {
+                this.viewItems.add(new SecondItem(i));
+                type = 1;
+            }
 
         }
     }
@@ -112,7 +104,7 @@ public class MyFragment extends Fragment implements ICBActionDelegate<BaseItem>,
 
     @Override
     public void delegateSortAction(List list) {
-
+        Toast.makeText(getContext(), "sort", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -127,12 +119,12 @@ public class MyFragment extends Fragment implements ICBActionDelegate<BaseItem>,
 
     @Override
     public void delegateSwipeAction() {
-
+        Toast.makeText(getContext(), "swipe", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void delegateSelectAction(int position) {
-
+        Toast.makeText(getContext(), "select", Toast.LENGTH_SHORT).show();
     }
 
 
